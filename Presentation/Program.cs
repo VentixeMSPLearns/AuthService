@@ -37,11 +37,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", policy =>
+    options.AddPolicy("AllowFrontendWithCredentials", policy =>
     {
         policy.WithOrigins("https://agreeable-sky-072bcf303.6.azurestaticapps.net")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -62,7 +63,7 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("AllowFrontendWithCredentials");
 
 app.UseAuthentication();
 app.UseAuthorization();
